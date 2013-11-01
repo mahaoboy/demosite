@@ -27,8 +27,8 @@
          <div class="field-group">
              <label for="content">工单类型（Issue Type）:</label>
 			 <select name="issuetype">
-                  <option value="Task" #if($issuetype&&$issuetype=="Task") selected="selected" #end>转开发</option>
-                  <option value="saab" #if($issuetype&&$issuetype!="Task") selected="selected" #end>普通工单</option>
+                  <option value="Task" #if($issuetype&&$issuetype!="saab") selected="selected" #end>转开发</option>
+                  <option value="saab" #if($issuetype&&$issuetype=="saab") selected="selected" #end>普通工单</option>
              </select>
             <!-- <input type="text" id="issuetype" name="issuetype" class="text" value="#if($issuetype)$issuetype#end"> -->
         </div>
@@ -59,7 +59,7 @@
             
             <tr><td width="30%" bgcolor="#6666FF" align="center">产品名称</td><td width="70%" bgcolor="#6666FF" align="center">#if($project)$project#end</td></tr>
             <tr><td bgcolor="#6666FF" align="center">主题</td><td bgcolor="#6666FF" align="center">#if($summary)$summary#end</td></tr>
-			<tr><td bgcolor="#6666FF" align="center">工单类型</td><td bgcolor="#6666FF" align="center">#if($issuetype=="Task") 转开发 #else 普通工单 #end</td></tr>
+			<tr><td bgcolor="#6666FF" align="center">工单类型</td><td bgcolor="#6666FF" align="center">#if($issuetype!="saab") 转开发 #else 普通工单 #end</td></tr>
 			<tr><td bgcolor="#6666FF" align="center">描述</td><td bgcolor="#6666FF" align="center">#if($description)$description#end</td></tr>
 			<tr><td bgcolor="#6666FF" align="center">报告人</td><td bgcolor="#6666FF" align="center">#if($username)$username#end</td></tr>
 				#if($issuekey && $issuelink)
@@ -70,12 +70,12 @@
     #if($itemlist)
 		<Span id="title">工单列表</span>
     <table width="100%" cellpadding="5" cellspacing="1" bordercolor="#333333">
-            <tr><td bgcolor="#eeeeee" align="center" style="font-weight:bold;">产品名称</td><td bgcolor="#eeeeee" align="center" style="font-weight:bold;">主题</td><td bgcolor="#eeeeee" align="center" style="font-weight:bold;">工单类型</td><td bgcolor="#eeeeee" align="center" style="font-weight:bold;">描述</td><td bgcolor="#eeeeee" align="center" style="font-weight:bold;">JIRA issue  <span>#if($itemlist.size() > 0) ( $itemlist.get(0).get("jiraissuewarn") ) #end</span></td></tr>
+            <tr><td bgcolor="#eeeeee" align="center" style="font-weight:bold;">产品名称</td><td bgcolor="#eeeeee" align="center" style="font-weight:bold;">主题</td><td bgcolor="#eeeeee" align="center" style="font-weight:bold;">工单类型</td><td bgcolor="#eeeeee" align="center" style="font-weight:bold;">描述</td><td bgcolor="#eeeeee" align="center" style="font-weight:bold;">JIRA issue 信息 </td></tr>
             #foreach ($content in $itemlist)
             <tr>
 						<td bgcolor="#6666FF" align="center">$content.get("project")</td>
 						<td bgcolor="#6666FF" align="center">$content.get("summary")</td>
-						<td bgcolor="#6666FF" align="center">#if($content.get("issuetype")=="Task") 转开发 #else 普通工单 #end</td>
+						<td bgcolor="#6666FF" align="center">#if($content.get("issuetype")!="saab") 转开发 #else 普通工单 #end</td>
 						<td bgcolor="#6666FF" align="center">$content.get("description")</td>
 						#if($content.get("issuekey"))
 							<td align="center">
@@ -88,9 +88,9 @@
 									</tr>
 									<tr>
 										<td bgcolor="#6666FF" align="center"><a href="$content.get('issuelink')" target="_blank">$content.get("issuekey")</a></td>
-										<td bgcolor="#6666FF" align="center">#if($content.get("jiraissueinfo")!="")$content.get("jiraissueinfo").get("status")#end</td>
-										<td bgcolor="#6666FF" align="center">#if($content.get("jiraissueinfo")!="")$content.get("jiraissueinfo").get("assignee")#end</td>
-										<td bgcolor="#6666FF" align="center">#if($content.get("jiraissueinfo")!="")$content.get("jiraissueinfo").get("fixVersions")#end</td>
+										<td bgcolor="#6666FF" align="center">#if($content.get("jiraissueinfo")!="")$content.get("jiraissueinfo").get("status")#else <span style="display:none">  $content.get("jiraissuewarn")  </span> #end</td>
+										<td bgcolor="#6666FF" align="center">#if($content.get("jiraissueinfo")!="")$content.get("jiraissueinfo").get("assignee")#else <span style="display:none>  $content.get("jiraissuewarn")  </span> #end</td>
+										<td bgcolor="#6666FF" align="center">#if($content.get("jiraissueinfo")!="")$content.get("jiraissueinfo").get("fixVersions")#else <span style="display:none>  $content.get("jiraissuewarn")  </span> #end</td>
 									</tr>
 								</table>
 							</td>

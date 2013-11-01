@@ -1,6 +1,7 @@
  package com.velocitydemo.velocityhandler;
                 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -61,13 +62,23 @@ public class JIRA extends VelocityViewServlet {
             	}
             	else{
             		
-            		if(issuetype.equals("Task"))
+/*            		if(issuetype.equals("Task"))
             			System.out.println("issue type:" + issuetype);
             		
             		Pattern pattern = Pattern.compile("Task");
             		Matcher matcher = pattern.matcher(issuetype);
-            		boolean urlCheck= matcher.matches();
-            		if(urlCheck){
+            		boolean urlCheck= matcher.matches();*/
+            		if(!issuetype.equals("saab")){
+
+            	/*		String issuetype1 = "";
+						try {
+							issuetype1 = new String(issuetype.getBytes("ISO-8859-1"),"GBK");// ÈÎÎñ
+							issuetype = issuetype1;
+						} catch (UnsupportedEncodingException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}*/
+            			
             			System.out.println("issue type 2:" + issuetype);
             			String responseStr = "";
                 		try {
@@ -90,7 +101,7 @@ public class JIRA extends VelocityViewServlet {
             			issueInfo.createIssue(project, summary, description, issuetype, username);
             			issueInfo.writeFile(velo.getProperty(Velocity.FILE_RESOURCE_LOADER_PATH).toString());
             		}
-            		//System.out.println(" +++++++ " + jirasite + " +++++++ " + project + " +++++++ " + summary + " +++++++ " + description + " +++++++ " +  issuetype + " +++++++ " +  username + " +++++++ " +  password);
+            		System.out.println(" +++++++ " + jirasite + " +++++++ " + project + " +++++++ " + summary + " +++++++ " + description + " +++++++ " +  issuetype + " +++++++ " +  username + " +++++++ " +  password);
 
             	}            		
             		                        	
